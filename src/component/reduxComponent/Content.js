@@ -7,12 +7,19 @@ class Content extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tagline: this.props.tagline
-      
+      tagline: this.props.tagline,
+      error: false,
+      success: false
     }
   }
+
+  checkEmail = (tagline) => {
+    this.setState({error: !this.state.error});
+    this.props.setTagline(tagline);
+  }
+
   render() {
-    const { tagline } = this.state;
+    const { tagline, error } = this.state;
     const { incrementCounter, decrementCounter, counterObj, setTagline } = this.props;
     return (
       <div className="main">
@@ -21,11 +28,13 @@ class Content extends Component {
           <h2>{counterObj.counterTitle}: {counterObj.count}</h2>
           <input type="button" className="btn" style={{ marginRight: 10 }} value="+1" onClick={incrementCounter} />
           <input type="button" className="btn" value="-1" onClick={decrementCounter} />
+
+          {error && <h1>Error Occured</h1>}
         </div>
         
         <div style={{ marginBottom: 20 }}>
           Tagline: <input type="text" className="tagline" value={tagline} onChange={e => this.setState({ tagline: e.target.value })} />
-          <input type="button" style={{ padding: '5px 7px', marginLeft: 10, width: 100 }} value="Set" onClick={() => setTagline(tagline)} />
+          <input type="button" style={{ padding: '5px 7px', marginLeft: 10, width: 100 }} value="Set" onClick={() => this.checkEmail(tagline)} />
         </div>
                 
         <h2>Lorem ipsum dolor</h2>
